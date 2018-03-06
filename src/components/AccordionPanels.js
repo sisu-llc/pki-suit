@@ -98,4 +98,4 @@ export default class Accordion extends React.Component<AccordionDefaultProps, Ac
   }
 }
 
-Accordion.AccordionPanel = AccordionPanel;
+AccordionPanels.AccordionPanel = AccordionPanel;
