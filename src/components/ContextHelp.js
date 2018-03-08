@@ -31,9 +31,6 @@ type ContextHelpProps = {
 export default class ContextHelp extends React.Component<void, ContextHelpProps, void> {
   static ContextHelpInfo;
 
-export default class ContextHelp extends React.Component<void, ContextHelpProps, void> {
-  static ContextHelpInfo;
-
   render() {
     const info = this.props.info;
     if (info) {
