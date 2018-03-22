@@ -1,5 +1,5 @@
 {
-  "name": "@attivio/suit",
+  "name": "@sisu-llc/pki-suit",
   "version": "0.0.19",
   "description": "Attivio SUIT, the Search UI Toolkit, is a library for creating search clients for searching the Attivio platform.",
   "keywords": [
@@ -13,11 +13,11 @@
   ],
   "homepage": "http://www.attivio.com",
   "bugs": {
-    "url": "https://github.com/attivio/suit/issues",
-    "email": "suitbugs@attivio.com"
+    "url": "https://github.com/sisu-llc/pki-suit/issues",
+    "email": "bugs@sisu.io"
   },
   "license": "SEE LICENSE IN LICENSE.txt",
-  "author": "Attivio, Inc.",
+  "author": "Sisu Integrated Services LLC",
   "files": [
     "css",
     "es",
@@ -26,7 +26,7 @@
   ],
   "main": "lib/index.js",
   "module": "es/index.js",
-  "repository": "https://github.com/attivio/suit",
+  "repository": "https://github.com/sisu-llc/pki-suit",
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module",
