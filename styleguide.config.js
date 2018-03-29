@@ -1,46 +1,47 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const createNwbWebpackConfig = require('create-nwb-webpack-config'); // eslint-disable-line import/no-extraneous-dependencies
+const merge = require('webpack-merge');
 
 // Use the webpack configuration that NWB generate since there's no actual
 // file for the style guide to use
-const webpackConfig = createNwbWebpackConfig();
-webpackConfig.node = {
-  fs: 'empty',
+const nwbWebpackConfig = createNwbWebpackConfig();
+const ourWebpackConfig = {
+  node: {
+    fs: 'empty',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'less-loader'],
+        }),
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader'],
+        }),
+      },
+      // {
+      //   test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: 'url-loader?limit=10000&minetype=application/font-woff',
+      // },
+      // {
+      //   test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: 'file-loader',
+      // },
+    ],
+  },
+  // plugins: [
+  //   new ExtractTextPlugin('style.css'),
+  // ],
 };
-const additionalRules = [
-  {
-    test: /\.css$/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: ['css-loader'],
-    }),
-  },
-  {
-    test: /\.less$/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: ['css-loader', 'less-loader'],
-    }),
-  },
-  // {
-  //   test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-  //   loader: 'url-loader?limit=10000&minetype=application/font-woff',
-  // },
-  // {
-  //   test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-  //   loader: 'file-loader',
-  // },
-];
-webpackConfig.module.rules = webpackConfig.module.rules ?
-  webpackConfig.module.rules.concat(additionalRules) : additionalRules;
 
-const additionalPlugins = [
-  new ExtractTextPlugin('style.css'),
-];
-
-webpackConfig.plugins = webpackConfig.plugins ?
-  webpackConfig.plugins.concat(additionalPlugins) : additionalPlugins;
+const mergedWebpackConfig = merge(nwbWebpackConfig, ourWebpackConfig);
 
 module.exports = {
   title: 'Attivio SUIT Component Reference',
@@ -55,6 +56,11 @@ module.exports = {
     theme: 'ambiance', // see http://codemirror.net/demo/theme.html
   },
   styles: {},
+  // propsParser: require('react-docgen-typescript').withDefaultConfig({
+  //   propFilter: {
+  //     skipPropsWithoutDoc: true,
+  //   },
+  // }).parse,
   sections: [
     {
       name: 'Introduction',
@@ -123,8 +129,6 @@ module.exports = {
           content: 'docs/searchResultsOther.md',
           components: () => {
             return [
-              'src/components/EntityTimeline.js',
-              'src/components/EntityTimelinesPanel.js',
               'src/components/ExpertCard.js',
               'src/components/ExpertDetails.js',
               'src/components/KnowledgeGraphPanel.js',
@@ -145,54 +149,54 @@ module.exports = {
             ];
           },
         },
-        {
-          name: 'Input',
-          content: 'docs/input.md',
-          components: () => {
-            return [
-              'src/components/DatePicker.js',
-              'src/components/DropdownButton.js',
-              'src/components/DataPairs.js',
-              'src/components/Menu.js',
-              'src/components/NavbarButton.js',
-              'src/components/NavbarFilter.js',
-              'src/components/NavbarOr.js',
-              'src/components/Masthead.js',
-              'src/components/NavbarPager.js',
-              'src/components/StarRating.js',
-              'src/components/Toggle.js',
-              'src/components/ToggleSwitch.js',
-            ];
-          },
-        },
-        {
-          name: 'Display',
-          content: 'docs/display.md',
-          components: () => {
-            return [
-              'src/components/Card.js',
-              'src/components/ChartTrends.js',
-              'src/components/Code.js',
-              'src/components/CollapsiblePanel.js',
-              'src/components/FormattedDate.js',
-              'src/components/Header360.js',
-              'src/components/LabeledData.js',
-              'src/components/Masthead.js',
-              'src/components/MastheadUser.js',
-              'src/components/MoreList.js',
-              'src/components/Navbar.js',
-              'src/components/NetworkDiagram.js',
-              'src/components/ProfilePhoto.js',
-              'src/components/SecondaryNavBar.js',
-              'src/components/SeparatedList.js',
-              'src/components/SqlLog.js',
-              'src/components/StarRating.js',
-              'src/components/Subheader360.js',
-              'src/components/TabPanel.js',
-              'src/components/TagCloud.js',
-            ];
-          },
-        },
+        // {
+        //   name: 'Input',
+        //   content: 'docs/input.md',
+        //   components: () => {
+        //     return [
+        //       'src/components/DatePicker.js',
+        //       'src/components/DropdownButton.js',
+        //       'src/components/DataPairs.js',
+        //       'src/components/Menu.js',
+        //       'src/components/NavbarButton.js',
+        //       'src/components/NavbarFilter.js',
+        //       'src/components/NavbarOr.js',
+        //       'src/components/Masthead.js',
+        //       'src/components/NavbarPager.js',
+        //       'src/components/StarRating.js',
+        //       'src/components/Toggle.js',
+        //       'src/components/ToggleSwitch.js',
+        //     ];
+        //   },
+        // },
+        // {
+        //   name: 'Display',
+        //   content: 'docs/display.md',
+        //   components: () => {
+        //     return [
+        //       'src/components/Card.js',
+        //       'src/components/ChartTrends.js',
+        //       'src/components/Code.js',
+        //       'src/components/CollapsiblePanel.js',
+        //       'src/components/FormattedDate.js',
+        //       'src/components/Header360.js',
+        //       'src/components/LabeledData.js',
+        //       'src/components/Masthead.js',
+        //       'src/components/MastheadUser.js',
+        //       'src/components/MoreList.js',
+        //       'src/components/Navbar.js',
+        //       'src/components/NetworkDiagram.js',
+        //       'src/components/ProfilePhoto.js',
+        //       'src/components/SecondaryNavBar.js',
+        //       'src/components/SeparatedList.js',
+        //       'src/components/SqlLog.js',
+        //       'src/components/StarRating.js',
+        //       'src/components/Subheader360.js',
+        //       'src/components/TabPanel.js',
+        //       'src/components/TagCloud.js',
+        //     ];
+        //   },
+        // },
       ],
     },
   ],
@@ -211,5 +215,5 @@ module.exports = {
     const fullMdPath = path.resolve(dir, '../../docs/components', mdName);
     return fullMdPath;
   },
-  webpackConfig,
+  webpackConfig: mergedWebpackConfig,
 };
