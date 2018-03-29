@@ -149,6 +149,14 @@ module.exports = {
             ];
           },
         },
+        {
+          name: 'Spotfire',
+          components: () => {
+            return [
+              'src/components/SpotfireWebPlayer.js',
+            ];
+          },
+        },
         // {
         //   name: 'Input',
         //   content: 'docs/input.md',
