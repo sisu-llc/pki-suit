@@ -39,7 +39,9 @@ function Configurable(WrappedComponent: React.Component): React.Component {
       const filled = Object.assign({}, props);
       if (this.context && this.context.configuration) {
         propKeys.forEach((property: string) => {
-          filled[property] = this.context.configuration.get(WrappedComponent.name, property, props[property]);
+          // XXX: we need to use displayName to avoid prod minimizers nuking names
+          const name = WrappedComponent.displayName || WrappedComponent.name;
+          filled[property] = this.context.configuration.get(name, property, props[property]);
         });
       }
       this.setState({

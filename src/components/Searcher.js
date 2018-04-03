@@ -136,7 +136,7 @@ type SearcherProps = {
   /**
    * The name of the Business Center profile to use for queries. If set, this will enable Profile level campaigns and promotions.
    */
-  businessCenterProfile?: string | null;
+  businessCenterProfile: string;
   /**
    * The Searcher contains arbitrary children, including the components that
    * control its properties and display the search results.
@@ -171,7 +171,7 @@ type SearcherDefaultProps = {
   sourcePath: string;
   format: 'list' | 'usercard' | 'doccard' | 'debug' | 'simple';
   resultsPerPage: number;
-  businessCenterProfile: string | null;
+  businessCenterProfile: string;
   defaultQueryLanguage: 'simple' | 'advanced';
 };
 
@@ -259,6 +259,8 @@ the offset to 0, and , if there's a previous search, perform a new one (and, onl
 class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, SearcherState> {
   static STAR_COLON_STAR = '*:*';
 
+  static displayName = 'Searcher';
+
   static defaultProps = {
     searchEngineType: 'attivio',
     customOptions: {},
@@ -286,7 +288,7 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     sourcePath: FieldNames.SOURCEPATH,
     format: 'list',
     resultsPerPage: 10,
-    businessCenterProfile: null,
+    businessCenterProfile: '',
     defaultQueryLanguage: 'simple',
   };
 

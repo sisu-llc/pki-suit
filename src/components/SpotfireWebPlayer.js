@@ -7,6 +7,7 @@ type SpotfireWebPlayerProps = {
   file: string;
 }
 
+const LOGIN_URL = 'http://crspotfire191.pkiapps.net:443/spotfire/login.html';
 const DEFAULT_HOST = 'http://crspotfire191.pkiapps.net:443/spotfire/wp/';
 const DEFAULT_FILE = '/User Demos/Gerard Conway/worldbank';
 
@@ -17,6 +18,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
   static defaultProps: SpotfireWebPlayerProps = {
     host: DEFAULT_HOST,
     file: DEFAULT_FILE,
+    loginUrl: LOGIN_URL,
   };
 
   constructor(props) {
@@ -25,6 +27,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       msg: 'Initializing Spotfire Web Player...',
       isLoaded: false,
       isInitializing: true,
+      requiresLogin: false,
     };
     const app = new spotfire.webPlayer.Application(this.props.host);
 
@@ -55,9 +58,18 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
     this.setState({ msg: `Document at path "${path}" closed.`, isLoaded: false });
   }
 
-  errorCallback(error) {
-    console.error(`Spotfire error: ${error}`);
-    this.setState({ msg: error, isLoaded: false, isInitializing: false });
+  errorCallback(errorCode, errorMessage) {
+    let msg = `${errorCode}: ${errorMessage}`;
+    let requiresLogin = false;
+
+    if (errorCode === spotfire.webPlayer.errorCodes.ERROROPEN) {
+      // Could be a 401 issue meaning the user needs to log in
+      console.log('Could be a 401');
+      msg = 'Please sign into Spotfire';
+      requiresLogin = true;
+    }
+    console.error(msg);
+    this.setState({ msg, isLoaded: false, isInitializing: false, requiresLogin });
   }
 
   render() {
@@ -67,10 +79,13 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       spotfireStyle = { height: 350, display: 'block' };
     }
 
+    const loginLink = this.state.requiresLogin ?
+      (<a href={this.props.loginUrl} target="_blank">Sign into Spotfire</a>) : (<div />);
     return (
       <div>
         <h3>Spotfire Web Player</h3>
         <div>{this.state.msg}</div>
+        {loginLink}
         <div id="container" style={spotfireStyle} />
       </div>
     );
