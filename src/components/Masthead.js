@@ -78,6 +78,12 @@ class Masthead extends React.Component<MastheadDefaultProps, MastheadProps, Mast
     username: null,
   }
 
+  static contextTypes = {
+    searcher: PropTypes.any,
+  };
+
+  static displayName = 'Masthead';
+
   constructor(props: MastheadProps) {
     super(props);
     this.state = {

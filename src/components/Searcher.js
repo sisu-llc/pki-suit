@@ -300,6 +300,10 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     searcher: PropTypes.any,
   }
 
+  static displayName = 'Searcher';
+
+  static EVERYTHING = '*:*';
+
   /**
    * Convert an array of facet filters to an array of string representations thereof.
    */
@@ -392,7 +396,7 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
       haveSearched: false,
       response: undefined,
       error: undefined,
-      query: Searcher.STAR_COLON_STAR,
+      query: Searcher.EVERYTHING,
       queryLanguage: this.props.defaultQueryLanguage,
       sort: ['.score:DESC'],
       relevancyModels: this.props.relevancyModels,
@@ -580,8 +584,6 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     let queryLanguage: 'simple' | 'advanced' = this.props.defaultQueryLanguage;
     if (parsed.queryLanguage === 'simple' || parsed.queryLanguage === 'advanced') {
       queryLanguage = parsed.queryLanguage;
-    } else if (parsed.queryLanguage) {
-      console.log(`Searcher was passed unknown query language from the URI: ${parsed.queryLanguage}. Using default: ${this.props.defaultQueryLanguage}`); // eslint-disable-line max-len
     }
 
     // Get the geoFilters (normalized to an array of strings)
@@ -662,8 +664,6 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     if (parsed.format === 'list' || parsed.format === 'usercard' || parsed.format === 'doccard' ||
         parsed.format === 'debug' || parsed.format === 'simple') {
       format = parsed.format;
-    } else if (parsed.format) {
-      console.log(`Searcher was passed unknown list format from the URI: ${parsed.format}. Using default: ${this.props.format}`);
     }
 
     const result: SearcherState = {
