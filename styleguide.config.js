@@ -163,6 +163,7 @@ module.exports = {
           content: 'docs/input.md',
           components: () => {
             return [
+              'src/components/CardPicker.js',
               'src/components/DatePicker.js',
               'src/components/DropdownButton.js',
               'src/components/DataPairs.js',
