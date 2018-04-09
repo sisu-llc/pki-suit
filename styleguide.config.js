@@ -74,6 +74,7 @@ module.exports = {
           content: 'docs/searchControls.md',
           components: () => {
             return [
+              'src/components/DummySearcher.js',
               'src/components/NavbarFilter.js',
               'src/components/SearchBar.js',
               'src/components/Searcher.js',
@@ -142,7 +143,7 @@ module.exports = {
           content: 'docs/navigation.md',
           components: () => {
             return [
-              'src/components/BigButton.js',
+              // 'src/components/BigButton.js',
               'src/components/Breadcrumbs.js',
               'src/components/MastheadNavTabs.js',
               'src/components/NavigationButton.js',
@@ -166,20 +167,20 @@ module.exports = {
               'src/components/CardPicker.js',
               'src/components/CardPickerCard.js',
               'src/components/ConnectorCard.js',
+              'src/components/DataPairs.js',
               'src/components/DatePicker.js',
               'src/components/DropdownButton.js',
-              'src/components/DataPairs.js',
+              'src/components/Masthead.js',
               'src/components/Menu.js',
               'src/components/NavbarButton.js',
               'src/components/NavbarFilter.js',
               'src/components/NavbarOr.js',
-              'src/components/Masthead.js',
               'src/components/NavbarPager.js',
               'src/components/StarRating.js',
               'src/components/Toggle.js',
               'src/components/ToggleSwitch.js',
-              'src/components/WizardSteps.js',
               'src/components/Wizard.js',
+              'src/components/WizardSteps.js',
             ];
           },
         },
