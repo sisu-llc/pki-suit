@@ -38,7 +38,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
   }
 
   componentDidMount() {
-    console.log(`Opening app { host: "${this.props.host}", file: "${this.props.file}" }`);
+    // console.log(`Opening app { host: "${this.props.host}", file: "${this.props.file}" }`);
     this.app.open(this.props.file, 'container');
   }
 
@@ -64,7 +64,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
 
     if (errorCode === spotfire.webPlayer.errorCodes.ERROROPEN) {
       // Could be a 401 issue meaning the user needs to log in
-      console.log('Could be a 401');
+      console.error('Could be a 401');
       msg = 'Please sign into Spotfire';
       requiresLogin = true;
     }
