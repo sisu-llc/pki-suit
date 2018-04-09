@@ -64,8 +64,14 @@
     "vis": "^4.20.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "create-nwb-webpack-config": "^1.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-flowtype": "2.35.1",
@@ -74,14 +80,21 @@
     "eslint-plugin-react": "7.2.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "flow-bin": "^0.50.0",
+    "glob": "^7.1.2",
     "inferno": "^3.10.1",
+    "jsdom": "^11.7.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
-    "style-loader": "^0.18.2",
+    "mocha": "^5.0.5",
+    "mocha-jsdom": "^1.1.0",
     "nodemon": "^1.15.1",
     "nwb": "0.21.x",
     "react-dates": "^12.7.1",
     "react-styleguidist": "^6.0.20",
-    "rimraf": "latest"
+    "react-test-renderer": "^15.6.2",
+    "rimraf": "latest",
+    "sinon": "^4.5.0",
+    "style-loader": "^0.18.2",
+    "window-mock": "0.0.13"
   }
 }

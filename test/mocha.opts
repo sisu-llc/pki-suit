@@ -1,0 +1,4 @@
+--require babel-core/register
+--require ./test/setup
+--ui bdd
+--recursive

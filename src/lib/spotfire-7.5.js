@@ -1668,7 +1668,10 @@ spotfire.webPlayer.Document.prototype._processApiQueue = function()
     }
 }
 
-spotfire.webPlayer.Application.isIE = navigator.appName.toLowerCase().indexOf("explorer") !== -1;
+// Modified by Dave Voutila, 9 Apr 2018
+//spotfire.webPlayer.Application.isIE = navigator.appName.toLowerCase().indexOf("explorer") !== -1;
+spotfire.webPlayer.Application.isIE = typeof navigator !== 'undefined'  ?
+  navigator.appName.toLowerCase().indexOf("explorer") !== -1 : false;
 
 spotfire.webPlayer.Document.prototype._deleteIFrames = function()
 {
