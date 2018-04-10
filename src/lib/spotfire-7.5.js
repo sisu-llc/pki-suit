@@ -1733,4 +1733,4 @@ spotfire.webPlayer.Application.prototype._isOpened = function ()
 };
 
 // Modified by Dave Voutila
-module.exports = spotfire
+export default spotfire
