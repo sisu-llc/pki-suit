@@ -328,9 +328,15 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
   }
 
   renderSpotfireResult() {
+    const doc = this.props.document;
+    const table = doc.getFirstValue(FieldNames.TABLE);
+    const position = this.props.position;
+
     return (
-      <div className=" attivio-search-result">
-        <div className="attivio-search-result-col">
+      <div className="attivio-search-result row">
+        <DocumentType docType={table} position={position} />
+        <div className="attivio-search-result-content">
+          <SearchResultTitle doc={doc} baseUri={this.props.baseUri} />
           <SpotfireWebPlayer />
         </div>
       </div>

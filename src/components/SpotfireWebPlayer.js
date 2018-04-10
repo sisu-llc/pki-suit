@@ -11,14 +11,24 @@ const LOGIN_URL = 'http://crspotfire191.pkiapps.net:443/spotfire/login.html';
 const DEFAULT_HOST = 'http://crspotfire191.pkiapps.net:443/spotfire/wp/';
 const DEFAULT_FILE = '/User Demos/Gerard Conway/worldbank';
 
+function  _guid () {
+  function f () {
+    return (((1+Math.random())*0x10000)|0).toString(16).substring(1)
+  }
+  return f() + f() + f() + f();
+}
+
 /**
  * Embeds a Spotfire WebPlayer using Spotfire JS library!
  */
 class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
+  static displayName = 'SpotfireWebPlayer';
+
   static defaultProps: SpotfireWebPlayerProps = {
     host: DEFAULT_HOST,
     file: DEFAULT_FILE,
     loginUrl: LOGIN_URL,
+    // guid: _guid()
   };
 
   constructor(props) {
@@ -28,8 +38,10 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       isLoaded: false,
       isInitializing: true,
       requiresLogin: false,
+      guid: props.guid || _guid()
     };
-    const app = new spotfire.webPlayer.Application(this.props.host);
+    const parameters = ''
+    const app = new spotfire.webPlayer.Application(this.props.host, null, props.file, parameters);
 
     app.onError(this.errorCallback.bind(this));
     app.onClosed(this.onClosedCallback.bind(this));
@@ -38,19 +50,17 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
   }
 
   componentDidMount() {
-    this.app.openDocument('container', this.props.file);
+    this.app.openDocument(this.state.guid);
   }
 
   componentWillUnmount() {
-    console.log('unmount called!');
-
     if (this.app) {
       this.app.close();
     }
   }
 
   onOpenedCallback() {
-    this.setState({ msg: 'Spotfire doc opened!', isLoaded: true, isInitializing: false });
+    this.setState({ msg: '', isLoaded: true, isInitializing: false });
   }
 
   onClosedCallback(path) {
@@ -63,11 +73,11 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
 
     if (errorCode === spotfire.webPlayer.errorCodes.ERROROPEN) {
       // Could be a 401 issue meaning the user needs to log in
-      console.error('Could be a 401');
+      // console.error('Could be a 401');
       msg = 'Please sign into Spotfire';
       requiresLogin = true;
     }
-    console.error(msg);
+    // console.error(msg);
     this.setState({ msg, isLoaded: false, isInitializing: false, requiresLogin });
   }
 
@@ -82,10 +92,9 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       (<a href={this.props.loginUrl} target="_blank">Sign into Spotfire</a>) : (<span />);
     return (
       <div>
-        <h3>Spotfire Web Player</h3>
         <div>{this.state.msg}</div>
         {loginLink}
-        <div id="container" style={spotfireStyle} />
+        <div class="spotfireContainer" id={this.state.guid} style={spotfireStyle} />
       </div>
     );
   }

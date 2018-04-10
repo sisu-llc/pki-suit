@@ -9,7 +9,7 @@ import SpotfireWebPlayer from '../../src/components/SpotfireWebPlayer';
 
 describe('SearchResult', function () {
 
-  context('when is in list format', function () {
+  context('when in list format', function () {
 
     const format = 'list';
     const fields = new Map();
