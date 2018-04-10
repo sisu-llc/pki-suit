@@ -38,8 +38,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
   }
 
   componentDidMount() {
-    // console.log(`Opening app { host: "${this.props.host}", file: "${this.props.file}" }`);
-    this.app.open(this.props.file, 'container');
+    this.app.openDocument('container', this.props.file);
   }
 
   componentWillUnmount() {
@@ -80,7 +79,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
     }
 
     const loginLink = this.state.requiresLogin ?
-      (<a href={this.props.loginUrl} target="_blank">Sign into Spotfire</a>) : (<div />);
+      (<a href={this.props.loginUrl} target="_blank">Sign into Spotfire</a>) : (<span />);
     return (
       <div>
         <h3>Spotfire Web Player</h3>

@@ -9,6 +9,7 @@ import StringUtils from '../util/StringUtils';
 
 import Card from './Card';
 import DocumentType from './DocumentType';
+import SpotfireWebPlayer from './SpotfireWebPlayer';
 import StarRating from './StarRating';
 import SearchResultTitle from './SearchResultTitle';
 import SearchResultBody from './SearchResultBody';
@@ -326,7 +327,21 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
     );
   }
 
+  renderSpotfireResult() {
+    return (
+      <div className=" attivio-search-result">
+        <div className="attivio-search-result-col">
+          <SpotfireWebPlayer />
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    if (this.props.document.getFirstValue('.type') === 'spotfire') {
+      return this.renderSpotfireResult();
+    }
+
     switch (this.props.format) {
       case 'debug':
         return this.renderDebugResult();

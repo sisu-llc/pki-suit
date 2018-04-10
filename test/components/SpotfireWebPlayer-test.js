@@ -20,11 +20,18 @@ describe('SpotfireWebPlayer', function() {
     expect(wrapper.find('#container')).to.have.lengthOf(1);
   });
 
-  it('sound provide a login link on 401 errors', function() {
+  it('should provide a login link', function() {
     const wrapper = shallow(<SpotfireWebPlayer />);
+    wrapper.setState({requiresLogin: false});
     expect(wrapper.find('a')).to.have.length(0);
 
     wrapper.setState({requiresLogin: true});
     expect(wrapper.find('a')).to.have.length(1);
+  });
+
+  it('should show toggle login links on 401 errors', function() {
+    const wrapper = shallow(<SpotfireWebPlayer />);
+    wrapper.instance().errorCallback(spotfire.webPlayer.errorCodes.ERROROPEN, '');
+    expect(wrapper.state('requiresLogin')).to.equal(true);
   });
 });
