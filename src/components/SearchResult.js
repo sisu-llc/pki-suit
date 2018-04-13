@@ -9,6 +9,7 @@ import StringUtils from '../util/StringUtils';
 
 import Card from './Card';
 import DocumentType from './DocumentType';
+import SpotfireWebPlayer from './SpotfireWebPlayer';
 import StarRating from './StarRating';
 import SearchResultTitle from './SearchResultTitle';
 import SearchResultBody from './SearchResultBody';
@@ -326,7 +327,27 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
     );
   }
 
+  renderSpotfireResult() {
+    const doc = this.props.document;
+    const table = doc.getFirstValue(FieldNames.TABLE);
+    const position = this.props.position;
+
+    return (
+      <div className="attivio-search-result row">
+        <DocumentType docType={table} position={position} />
+        <div className="attivio-search-result-content">
+          <SearchResultTitle doc={doc} baseUri={this.props.baseUri} />
+          <SpotfireWebPlayer />
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    if (this.props.document.getFirstValue('.type') === 'spotfire') {
+      return this.renderSpotfireResult();
+    }
+
     switch (this.props.format) {
       case 'debug':
         return this.renderDebugResult();

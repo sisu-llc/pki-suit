@@ -2410,12 +2410,18 @@ const fieldsCopy = new Map(documents[9].fields);
 const docWithChildren = new SearchDocument(fieldsCopy);
 docWithChildren.children = documents.slice(0, 9);
 
+const spotfireFields = fieldsCopy;
+spotfireFields.set('.type', ['spotfire']);
+spotfireFields.set('table', ['spotfire']);
+const spotfireDoc = new SearchDocument(spotfireFields);
+
 const sampleDocs = {
   rawDocuments: documents,
   honduras: documents[1],
   caymans: documents[2],
   elsalvador: documents[3],
   bolivia: documents[4],
+  spotfire: spotfireDoc,
   docWithChildren,
 };
 
