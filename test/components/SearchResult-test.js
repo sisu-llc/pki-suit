@@ -13,7 +13,7 @@ describe('SearchResult', function () {
 
     const format = 'list';
     const fields = new Map();
-    fields.set('.type', ['spotfire']);
+    fields.set('pki.suit.type', ['spotfire']);
     fields.set('table', ['spotfire']);
     const doc = new SearchDocument(fields, null, []);
 

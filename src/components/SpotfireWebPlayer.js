@@ -5,17 +5,36 @@ import spotfire from '../lib/spotfire-7.5';
 type SpotfireWebPlayerProps = {
   host: string;
   file: string;
+  loginUrl: string;
+  guid: string;
+  filters: Array;
 }
 
 const LOGIN_URL = 'http://crspotfire191.pkiapps.net:443/spotfire/login.html';
 const DEFAULT_HOST = 'http://crspotfire191.pkiapps.net:443/spotfire/wp/';
 const DEFAULT_FILE = '/User Demos/Gerard Conway/worldbank';
 
-function  _guid () {
-  function f () {
-    return (((1+Math.random())*0x10000)|0).toString(16).substring(1)
+function  _guid() {
+  function f() {
+    return ((( 1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   }
   return f() + f() + f() + f();
+}
+
+function constructFilterString(filterObjects) {
+  // TODO: check for empty array input
+  const filters = filterObjects || [{}];
+
+  const filterString = filters.reduce((acc, filter) => {
+    if (filter.table && filter.column && filter.values) {
+      const values = filter.values.map(value => `"${value}"`);
+      const valuesString = `{${values.join(',')}}`;
+      return `${acc}SetFilter(tableName="${filter.table}", columnName="${filter.column}", values=${valuesString});`;
+    }
+
+    return acc;
+  }, '');
+  return filterString;
 }
 
 /**
@@ -28,7 +47,8 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
     host: DEFAULT_HOST,
     file: DEFAULT_FILE,
     loginUrl: LOGIN_URL,
-    // guid: _guid()
+    guid: '',
+    filters: [{}],
   };
 
   constructor(props) {
@@ -38,10 +58,17 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       isLoaded: false,
       isInitializing: true,
       requiresLogin: false,
-      guid: props.guid || _guid()
+      guid: props.guid || _guid(),
+      // filters: props.filters || [{}],
     };
-    const parameters = ''
-    const app = new spotfire.webPlayer.Application(this.props.host, null, props.file, parameters);
+    // SetFilter(tableName=”WorldBankData”,columnName=”Country Name”,values={”Algeria”});
+    const parameters = constructFilterString(props.filters);
+    const customizationInfo = new spotfire.webPlayer.Customization();
+    customizationInfo.showStatusBar = false;
+    customizationInfo.showToolbar = false;
+    customizationInfo.showPageNavigation = false;
+
+    const app = new spotfire.webPlayer.Application(this.props.host, customizationInfo, props.file, parameters);
 
     app.onError(this.errorCallback.bind(this));
     app.onClosed(this.onClosedCallback.bind(this));
@@ -77,7 +104,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       msg = 'Please sign into Spotfire';
       requiresLogin = true;
     }
-    // console.error(msg);
+    console.error(errorMessage);
     this.setState({ msg, isLoaded: false, isInitializing: false, requiresLogin });
   }
 
@@ -94,10 +121,12 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       <div>
         <div>{this.state.msg}</div>
         {loginLink}
-        <div class="spotfireContainer" id={this.state.guid} style={spotfireStyle} />
+        <div className="spotfireContainer" id={this.state.guid} style={spotfireStyle} />
       </div>
     );
   }
 }
 
+// TODO: move to class method?
+SpotfireWebPlayer.constructFilterString = constructFilterString;
 export default SpotfireWebPlayer;

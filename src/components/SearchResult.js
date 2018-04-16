@@ -20,6 +20,8 @@ import RelevancyScore from './RelevancyScore';
 import DocumentEntityList from './DocumentEntityList';
 import Signals from '../api/Signals';
 
+const SUIT_TYPE_FIELD = 'pki.suit.type';
+
 type SearchResultProps = {
   /**
    * Optional. The location of the node through which to interact with Attivio.
@@ -344,7 +346,7 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
   }
 
   render() {
-    if (this.props.document.getFirstValue('.type') === 'spotfire') {
+    if (this.props.document.getFirstValue(SUIT_TYPE_FIELD) === 'spotfire') {
       return this.renderSpotfireResult();
     }
 

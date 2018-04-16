@@ -8,7 +8,7 @@ __1:__ Sample SpotfireWebPlayer
 
 __2:__ SpotfireWebPlayer as part of a search result.
 
-If the `.type` field is `spotfire`, the `SearchResult` should render as a Spotfire Web Player:
+If the `pki.suit.type` field is `spotfire`, the `SearchResult` should render as a Spotfire Web Player:
 
 ```jsx
   sampleDocs = require('../sampleData/Documents').default;

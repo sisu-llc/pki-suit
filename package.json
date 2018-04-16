@@ -1,6 +1,6 @@
 {
   "name": "@sisu-llc/pki-suit",
-  "version": "0.1.26",
+  "version": "0.1.28",
   "description": "Attivio SUIT, the Search UI Toolkit, is a library for creating search clients for searching the Attivio platform.",
   "keywords": [
     "Attivio",
@@ -35,7 +35,7 @@
   "module": "es/index.js",
   "repository": "https://github.com/sisu-llc/pki-suit",
   "scripts": {
-    "build": "rollup -c",
+    "build": "nwb build-react-component",
     "clean": "nwb clean-module",
     "watch": "nodemon --watch src --exec \"rimraf .babelrc && npm run build\"",
     "test": "mocha",
