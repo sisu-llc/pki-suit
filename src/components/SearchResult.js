@@ -332,14 +332,23 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
   renderSpotfireResult() {
     const doc = this.props.document;
     const table = doc.getFirstValue(FieldNames.TABLE);
-    const position = this.props.position;
+
+    let filter = {
+      table: doc.getFirstValue('pki.spotfire.filter.table'),
+      column: doc.getFirstValue('pki.spotfire.filter.column'),
+      values: [doc.getFirstValue('pki.spotfire.filter.values')],
+    };
+
+    if (!filter.table || !filter.column) {
+      filter = {};
+    }
 
     return (
       <div className="attivio-search-result row">
-        <DocumentType docType={table} position={position} />
+        <DocumentType docType={table} position={this.props.position} />
         <div className="attivio-search-result-content">
           <SearchResultTitle doc={doc} baseUri={this.props.baseUri} />
-          <SpotfireWebPlayer />
+          <SpotfireWebPlayer filters={[filter]} />
         </div>
       </div>
     );

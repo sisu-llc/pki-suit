@@ -103,6 +103,10 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
       // console.error('Could be a 401');
       msg = 'Please sign into Spotfire';
       requiresLogin = true;
+    } else if (errorCode === spotfire.webPlayer.errorCodes.ERRORINTERNAL) {
+      // Could be a bad filter setting
+      msg = 'Internal Spotfire error: please check the filter parameters!';
+      requiresLogin = false;
     }
     console.error(errorMessage);
     this.setState({ msg, isLoaded: false, isInitializing: false, requiresLogin });
