@@ -67,15 +67,16 @@ export default class DataPairs extends React.Component<void, DataPairsProps, Dat
         value = `${pair.value.substr(0, 100)}\u2026`;
       }
 
+      // XXX: XSS vulnerability. Need to remove added dangerouslySetInnerHTML in future.
       if (pair.type && pair.type !== '') {
         // Have a real type, use that class name
         const className = `attivio-labeldata-2col-search-results-entity attivio-labeldata-2col-search-results-${pair.type}`;
-        rows.push(<dt className={className} key={`${pair.label}-label`}>{pair.label}</dt>);
+        rows.push(<dt className={className} key={`${pair.label}-label`} dangerouslySetInnerHTML={{__html: pair.label}} />);
       } else {
         // Simple label
-        rows.push(<dt key={`${pair.label}-label`}>{pair.label}</dt>);
+        rows.push(<dt key={`${pair.label}-label`} dangerouslySetInnerHTML={{__html: pair.label}} />);
       }
-      rows.push(<dd key={`${pair.label}-value`}>{value}</dd>);
+      rows.push(<dd key={`${pair.label}-value`} dangerouslySetInnerHTML={{__html: value}} />);
     });
     if (!this.state.showingAll && haveTruncated) {
       // Add the show all link...
