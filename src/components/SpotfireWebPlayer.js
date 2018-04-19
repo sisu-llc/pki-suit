@@ -67,8 +67,9 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
     customizationInfo.showStatusBar = false;
     customizationInfo.showToolbar = false;
     customizationInfo.showPageNavigation = false;
+    customizationInfo.showFilterPanel = false;
 
-    const app = new spotfire.webPlayer.Application(this.props.host, customizationInfo, props.file, parameters);
+    const app = new spotfire.webPlayer.Application(props.host, customizationInfo, props.file, parameters);
 
     app.onError(this.errorCallback.bind(this));
     app.onClosed(this.onClosedCallback.bind(this));

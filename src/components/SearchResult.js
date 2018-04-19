@@ -331,7 +331,21 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
 
   renderSpotfireResult() {
     const doc = this.props.document;
+    const docId = doc.getFirstValue('.id');
     const table = doc.getFirstValue(FieldNames.TABLE);
+    const docTags = doc.getAllValues('tags');
+
+    const spotfireProps = {}
+    const host = doc.getFirstValue('pki.spotfire.host');
+    const file = doc.getFirstValue('pki.spotfire.file');
+    if (host && file) {
+      spotfireProps.host = host;
+      spotfireProps.file = file;
+    }
+
+    const spotfireEntityFields = new Map(this.props.entityFields);
+    spotfireEntityFields.set('pki.spotfire.file', 'File');
+    spotfireEntityFields.set('pki.spotfire.host', 'Host');
 
     let filter = {
       table: doc.getFirstValue('pki.spotfire.filter.table'),
@@ -342,13 +356,22 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
     if (!filter.table || !filter.column) {
       filter = {};
     }
+    spotfireProps.filters = [filter];
 
+    // <DocumentEntityList doc={doc} entityFields={spotfireEntityFields} />
     return (
       <div className="attivio-search-result row">
         <DocumentType docType={table} position={this.props.position} />
         <div className="attivio-search-result-content">
           <SearchResultTitle doc={doc} baseUri={this.props.baseUri} />
-          <SpotfireWebPlayer filters={[filter]} />
+          <Row>
+            <Col xs={8} sm={8}>
+              <SpotfireWebPlayer {...spotfireProps} />
+            </Col>
+            <Col xs={4} sm={4}>
+              <DocumentEntityList doc={doc} entityFields={spotfireEntityFields} />
+            </Col>
+          </Row>
         </div>
       </div>
     );
