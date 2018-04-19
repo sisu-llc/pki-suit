@@ -361,7 +361,21 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
     // <DocumentEntityList doc={doc} entityFields={spotfireEntityFields} />
     return (
       <div className="attivio-search-result row">
-        <DocumentType docType={table} position={this.props.position} />
+        <div className="attivio-search-result-col">
+          <DocumentType docType={table} position={this.props.position} />
+          <dl className="attivio-labeldata-stacked attivio-labeldata-stacked-search-results">
+            {this.props.showRatings ? (
+              <div>
+                <dt>Rating</dt>
+                <dd>
+                  <StarRating onRated={(rating) => { this.rateDocument(doc, rating); }} />
+                </dd>
+              </div>
+            ) : null}
+            {this.props.showScores ? <dt>Relevancy Score</dt> : ''}
+            {this.props.showScores ? <dd><RelevancyScore score={score} explanation={scoreDescription} id={docId} /></dd> : ''}
+          </dl>
+        </div>
         <div className="attivio-search-result-content">
           <SearchResultTitle doc={doc} baseUri={this.props.baseUri} />
           <Row>
@@ -370,6 +384,7 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
             </Col>
             <Col xs={4} sm={4}>
               <DocumentEntityList doc={doc} entityFields={spotfireEntityFields} />
+              <SearchResultTags tags={docTags} docId={docId} view360Label={null} />
             </Col>
           </Row>
         </div>

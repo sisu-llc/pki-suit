@@ -1,6 +1,6 @@
 {
   "name": "@sisu-llc/pki-suit",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "Attivio SUIT, the Search UI Toolkit, is a library for creating search clients for searching the Attivio platform.",
   "keywords": [
     "Attivio",
