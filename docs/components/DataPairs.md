@@ -13,7 +13,17 @@ __1.__ Showing entity lists.
   />
 ```
 
-__2.__ Once more, with a Show All link
+__2.__ With highlighted terms
+
+```jsx
+  <DataPairs
+    pairs={[
+      new DataPairs.DataPairInfo('People', 'George <span class="highlight">Washington</span>, Frieda Kahlo, and Mickey Mouse', 'person'),
+    ]}
+  />
+```
+
+__3.__ With a Show All link
 
 ```jsx
   <DataPairs
