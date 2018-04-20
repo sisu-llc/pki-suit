@@ -11,6 +11,8 @@ type SearchResultTitleProps = {
    * Defaults to the value in the configuration.
    */
   baseUri: string;
+  /** Optional. Set the Header class (e.g. 'h1') **/
+  as: string;
 };
 
 type SearchResultTitleDefaultProps = {
@@ -25,6 +27,7 @@ type SearchResultTitleDefaultProps = {
 export default class SearchResultTitle extends React.Component<SearchResultTitleDefaultProps, SearchResultTitleProps, void> {
   static defaultProps = {
     baseUri: '',
+    as: 'h4',
   };
 
   constructor(props: SearchResultTitleProps) {
@@ -68,10 +71,21 @@ export default class SearchResultTitle extends React.Component<SearchResultTitle
       titleComp = <span dangerouslySetInnerHTML={{ __html: title }} />; // eslint-disable-line react/no-danger
     }
 
-    return (
-      <h2 className="attivio-search-result-title">
-        {titleComp}
-      </h2>
-    );
+    const className = 'attivio-search-result-title';
+    const h1 = (<h1 className={className}>{titleComp}</h1>)
+    const h2 = (<h2 className={className}>{titleComp}</h2>)
+    const h3 = (<h3 className={className}>{titleComp}</h3>)
+    const h4 = (<h4 className={className}>{titleComp}</h4>)
+
+    if (this.props.as) {
+      switch (this.props.as.toLowerCase()) {
+        case 'h1': return h1;
+        case 'h2': return h2;
+        case 'h3': return h3;
+        case 'h4': return h4;
+      }
+    }
+
+    return h4;
   }
 }

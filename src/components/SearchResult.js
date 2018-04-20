@@ -381,10 +381,10 @@ export default class SearchResult extends React.Component<SearchResultDefaultPro
           <Row>
             <Col xs={8} sm={8}>
               <SpotfireWebPlayer {...spotfireProps} />
+              <SearchResultTags tags={docTags} docId={docId} view360Label={null} />
             </Col>
             <Col xs={4} sm={4}>
               <DocumentEntityList doc={doc} entityFields={spotfireEntityFields} />
-              <SearchResultTags tags={docTags} docId={docId} view360Label={null} />
             </Col>
           </Row>
         </div>

@@ -101,6 +101,7 @@ module.exports = {
               'src/components/SearchResultsError.js',
               'src/components/SearchResultsSummary.js',
               'src/components/SearchResultTags.js',
+              'src/components/SearchResultTitle.js',
               'src/components/SentimentBar.js',
             ];
           },

@@ -121,7 +121,7 @@ class SpotfireWebPlayer extends React.Component<SpotfireWebPlayerProps> {
     }
 
     const loginLink = this.state.requiresLogin ?
-      (<a href={this.props.loginUrl} target="_blank">Sign into Spotfire</a>) : (<span />);
+      (<p><a href={this.props.loginUrl} target="_blank">Sign into Spotfire and refresh this page.</a></p>) : (<span />);
     return (
       <div>
         <div>{this.state.msg}</div>
