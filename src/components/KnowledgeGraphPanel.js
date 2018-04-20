@@ -39,6 +39,8 @@ type KnowledgeGraphPanelProps = {
    * only show links to documnents that come from tables other than the one the main document is in.
    */
   includeAllTables: boolean;
+  panelHeight: string;
+  panelBackgroundColor: string;
 };
 
 type KnowledgeGraphPanelDefaultProps = {
@@ -50,6 +52,8 @@ type KnowledgeGraphPanelDefaultProps = {
   entityValue: string | null;
   showEdges: boolean;
   includeAllTables: boolean;
+  panelHeight: '1200px';
+  panelBackgroundColor: '#f5f5f5';
 };
 
 type KnowledgeGraphPanelState = {
@@ -172,8 +176,8 @@ export default class KnowledgeGraphPanel extends React.Component<KnowledgeGraphP
 
   render() {
     const style = {
-      backgroundColor: '#f5f5f5',
-      height: '1200px',
+      backgroundColor: this.props.panelBackgroundColor,
+      height: this.props.panelHeight,
     };
 
     if (this.state.error) {
