@@ -3,7 +3,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import NavTabInfo from './NavTabInfo';
+
+export class NavTabInfo {
+  label: string;
+  route: string;
+
+  constructor(label: string, route: string) {
+    this.label = label;
+    this.route = route;
+  }
+}
 
 type MastheadNavTabsProps = {
   location: PropTypes.object.isRequired;
@@ -33,6 +42,8 @@ class MastheadNavTabs extends React.Component<MastheadNavTabsDefaultProps, Masth
   static defaultProps = {
     initialTab: null,
   };
+
+  static displayName = 'MastheadNavTabs';
 
   static NavTabInfo;
 

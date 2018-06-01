@@ -5,6 +5,8 @@ import Dropdown from 'react-bootstrap/lib/Dropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { RootCloseWrapper } from 'react-overlays';
 
+import FetchUtils from '../util/FetchUtils';
+
 type AutoCompleteInputProps = {
   id: string;
   uri: string | null;
@@ -35,9 +37,6 @@ type AutoCompleteInputState = {
 };
 
 export default class AutoCompleteInput extends React.Component<AutoCompleteInputDefaultProps, AutoCompleteInputProps, AutoCompleteInputState> { // eslint-disable-line max-len
-  // Start looking for autocomplete values when there are at least 3 characters in the input field
-  static AUTOCOMPLETE_THRESHOLD = 2;
-
   static defaultProps = {
     id: 'autocomplete',
     placeholder: '',
@@ -46,6 +45,11 @@ export default class AutoCompleteInput extends React.Component<AutoCompleteInput
     className: '',
     style: {},
   };
+
+  static displayName = 'AutoCompleteInput';
+
+  // Start looking for autocomplete values when there are at least 3 characters in the input field
+  static AUTOCOMPLETE_THRESHOLD = 2;
 
   constructor(props: AutoCompleteInputProps) {
     super(props);
@@ -74,7 +78,7 @@ export default class AutoCompleteInput extends React.Component<AutoCompleteInput
     this.props.updateValue(newValue, true);
     this.setState({
       queryValue: newValue,
-    })
+    });
     this.closeMenu();
   }
 
@@ -101,9 +105,10 @@ export default class AutoCompleteInput extends React.Component<AutoCompleteInput
           suggestions: [],
           queryValue: query,
         });
-        fetch(`${uri}?term=${encodedValue}`, { credentials: 'include' }).then((response) => {
-          response.json().then((data) => {
-            const suggestions = Array.isArray(data) ? data.map((item) => {
+
+        const callback = (response: any | null, errorString: string | null) => {
+          if (response) {
+            const suggestions = Array.isArray(response) ? response.map((item) => {
               return item.label;
             }) : [];
             const open = suggestions.length > 0;
@@ -113,22 +118,16 @@ export default class AutoCompleteInput extends React.Component<AutoCompleteInput
               error: '',
               open,
             });
-          }).catch((error) => {
+          } else if (errorString) {
             this.setState({
               isLoading: false,
               suggestions: [],
-              error,
-              open: error.length > 0,
+              error: errorString,
+              open: errorString.length > 0,
             });
-          });
-        }, (error) => {
-          this.setState({
-            isLoading: false,
-            suggestions: [],
-            error,
-            open: error.length > 0,
-          });
-        });
+          }
+        };
+        FetchUtils.fetch(`${uri}?term=${encodedValue}`, null, callback, 'GET', 'An error occured while looking for suggestions.');
       }
     } else {
       this.setState({
@@ -143,14 +142,14 @@ export default class AutoCompleteInput extends React.Component<AutoCompleteInput
 
   doKeyPress(event: Event & { currentTarget: HTMLInputElement, keyCode: number }) {
     const { suggestions } = this.state;
-    //This condition is satisfied when a user presses the enter key.
+    // This condition is satisfied when a user presses the enter key.
     if (event.keyCode === 13) {
       const query = event.currentTarget.value;
       this.props.updateValue(query, true);
       this.setState({
         suggestions: [],
         open: false,
-      })
+      });
     } else if (event.keyCode === 40 && this.state.cursor < suggestions.length - 1) {
       // This condition is satisfied when a user presses the down arrow key.
       const newCursor = this.state.cursor + 1;

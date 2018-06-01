@@ -18,6 +18,8 @@ function Configurable(WrappedComponent: React.Component): React.Component {
       configuration: PropTypes.any,
     };
 
+    static displayName = `Configurable(${WrappedComponent.displayName || WrappedComponent.name})`;
+
     constructor(props: any) {
       super(props);
       this.state = {

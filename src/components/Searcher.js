@@ -300,6 +300,10 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     searcher: PropTypes.any,
   }
 
+  static displayName = 'Searcher';
+
+  static EVERYTHING = '*:*';
+
   /**
    * Convert an array of facet filters to an array of string representations thereof.
    */
@@ -330,6 +334,23 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
 
     this.state = this.getDefaultState();
     (this: any).updateSearchResults = this.updateSearchResults.bind(this);
+    (this: any).updateQuery = this.updateQuery.bind(this);
+    (this: any).getQueryRequest = this.getQueryRequest.bind(this);
+    (this: any).updateFormat = this.updateFormat.bind(this);
+    (this: any).updateTags = this.updateTags.bind(this);
+    (this: any).doCustomSearch = this.doCustomSearch.bind(this);
+    (this: any).doSearch = this.doSearch.bind(this);
+    (this: any).performQueryImmediately = this.performQueryImmediately.bind(this);
+    (this: any).updateQueryLanguage = this.updateQueryLanguage.bind(this);
+    (this: any).updateResultsPerPage = this.updateResultsPerPage.bind(this);
+    (this: any).updateRelevancyModels = this.updateRelevancyModels.bind(this);
+    (this: any).updateSort = this.updateSort.bind(this);
+    (this: any).addGeoFilter = this.addGeoFilter.bind(this);
+    (this: any).addGeoFilters = this.addGeoFilters.bind(this);
+    (this: any).removeGeoFilter = this.removeGeoFilter.bind(this);
+    (this: any).addFacetFilter = this.addFacetFilter.bind(this);
+    (this: any).removeFacetFilter = this.removeFacetFilter.bind(this);
+    (this: any).changePage = this.changePage.bind(this);
   }
 
   state: SearcherState;
@@ -366,7 +387,7 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
   }
 
   /**
-   * Method to get the default state for the Searcher. This ism in a
+   * Method to get the default state for the Searcher. This is in a
    * separate method since it needs to be done both in the constructor
    * and in the reset method.
    */
@@ -375,7 +396,7 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
       haveSearched: false,
       response: undefined,
       error: undefined,
-      query: Searcher.STAR_COLON_STAR,
+      query: Searcher.EVERYTHING,
       queryLanguage: this.props.defaultQueryLanguage,
       sort: ['.score:DESC'],
       relevancyModels: this.props.relevancyModels,
@@ -563,8 +584,6 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     let queryLanguage: 'simple' | 'advanced' = this.props.defaultQueryLanguage;
     if (parsed.queryLanguage === 'simple' || parsed.queryLanguage === 'advanced') {
       queryLanguage = parsed.queryLanguage;
-    } else if (parsed.queryLanguage) {
-      console.log(`Searcher was passed unknown query language from the URI: ${parsed.queryLanguage}. Using default: ${this.props.defaultQueryLanguage}`); // eslint-disable-line max-len
     }
 
     // Get the geoFilters (normalized to an array of strings)
@@ -645,8 +664,6 @@ class Searcher extends React.Component<SearcherDefaultProps, SearcherProps, Sear
     if (parsed.format === 'list' || parsed.format === 'usercard' || parsed.format === 'doccard' ||
         parsed.format === 'debug' || parsed.format === 'simple') {
       format = parsed.format;
-    } else if (parsed.format) {
-      console.log(`Searcher was passed unknown list format from the URI: ${parsed.format}. Using default: ${this.props.format}`);
     }
 
     const result: SearcherState = {

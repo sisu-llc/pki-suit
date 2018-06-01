@@ -96,6 +96,12 @@ class SearchBar extends React.Component<SearchBarDefaultProps, SearchBarProps, S
     baseUri: '',
   };
 
+  static contextTypes = {
+    searcher: PropTypes.any,
+  };
+
+  static displayName = 'SearchBar';
+
   static AUTOCOMPLETE_THRESHOLD = 2;
 
   constructor(props: SearchBarProps) {

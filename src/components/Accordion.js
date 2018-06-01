@@ -5,7 +5,7 @@ import Panel from 'react-bootstrap/lib/Panel';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 
 /**
- * Describes one panel for an Accordian component. The body can be either
+ * Describes one panel for an Accordion component. The body can be either
  * an element or a simple string.
  */
 export class AccordionPanel {
@@ -48,6 +48,8 @@ export default class Accordion extends React.Component<AccordionDefaultProps, Ac
   static defaultProps = {
     defaultPanelKey: null,
   };
+
+  static displayName = 'Accordion';
 
   render() {
     const panels = this.props.panels.map((panel: AccordionPanel) => {

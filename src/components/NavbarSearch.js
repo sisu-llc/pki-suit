@@ -7,7 +7,7 @@ type NavbarSearchProps = {
   /** The current value of the search field. */
   value: string;
   /** The function to call when the user changes the contents of the search field. */
-  updateSearchString: (newValue: string) => {};
+  updateSearchString: (newValue: string) => void;
   /** The function to call when the user presses enter or clicks the search button */
   onSearch: () => void;
 };
@@ -24,6 +24,8 @@ export default class NavbarSearch extends React.Component<NavbarSearchDefaultPro
   static defaultProps: NavbarSearchDefaultProps = {
     placeholder: 'Search\u2026',
   };
+
+  static displayName = 'NavbarSearch';
 
   constructor(props: NavbarSearchProps) {
     super(props);

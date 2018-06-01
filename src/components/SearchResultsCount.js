@@ -11,6 +11,8 @@ export default class SearchResultsCount extends React.Component<void, {}, void> 
     searcher: PropTypes.any,
   };
 
+  static displayName = 'SearchResultsCount';
+
   render() {
     const searcher = this.context.searcher;
     let message;
@@ -47,7 +49,7 @@ export default class SearchResultsCount extends React.Component<void, {}, void> 
     }
 
     return (
-      <div className="attivio-globalmastnavbar-results">
+      <div className="attivio-globalmastnavbar-results" {...this.props}>
         {message}
       </div>
     );

@@ -30,6 +30,8 @@ export default class SearchResultTitle extends React.Component<SearchResultTitle
     as: 'h4',
   };
 
+  static displayName = 'SearchResultTitle';
+
   constructor(props: SearchResultTitleProps) {
     super(props);
     (this: any).handleDocumentClick = this.handleDocumentClick.bind(this);
