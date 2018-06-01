@@ -52,6 +52,8 @@ class SearchResultTags extends React.Component<SearchResultTagsDefaultProps, Sea
     searcher: PropTypes.any,
   };
 
+  static displayName = 'SearchResultTags';
+
   static defaultProps = {
     moreLikeThisQuery: '',
     vertical: false,

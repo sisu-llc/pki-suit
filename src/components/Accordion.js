@@ -43,6 +43,8 @@ type AccordionDefaultProps = {
 export default class Accordion extends React.Component<AccordionDefaultProps, AccordionProps, void> {
   static AccordionPanel;
 
+  static displayName = 'Accordian';
+
   static defaultProps = {
     defaultPanelKey: null,
   };

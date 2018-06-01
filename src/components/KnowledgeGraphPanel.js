@@ -74,6 +74,8 @@ export default class KnowledgeGraphPanel extends React.Component<KnowledgeGraphP
     includeAllTables: false,
   };
 
+  static displayName = 'KnowledgeGraphPanel';
+
   static contextTypes = {
     searcher: PropTypes.any,
   };
